@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 自定义AddressPicker的dialog背景全透明无边框 -->
+    <style name="AddressPickerStyle" parent="Base.Theme.AppCompat.Dialog">
+        <!-- 背景颜色及和透明程度 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 是否去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 是否去除边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否模糊 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--软键盘是否显示-->
+        <item name="android:windowSoftInputMode">stateHidden</item>
+    </style>
+
+    <!--AddressPicker的tab style-->
+    <style name="address_tab_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:text">请选择</item>
+        <!--<item name="android:textColor">@drawable/address_tab_text_color_selector</item>-->
+        <item name="android:textSize">16sp</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <!--AddressPicker的动画-->
+    <style name="address_picker_animation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/address_picker_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/address_picker_exit_anim</item>
+    </style>
+
+</resources>
