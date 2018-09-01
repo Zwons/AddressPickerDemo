@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
 import com.ymht.library.R;
 
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class AddressPicker extends Dialog implements View.OnClickListener {
     private int itemTextSelectedColor = Color.parseColor("#FDD23C");//item的text选中的颜色
     private int itemTextUnselectedColor = Color.parseColor("#343434");//item的text未选中的颜色
     private int itemImageResourceId = R.drawable.address_select;//item对号的资源图片
+    private LinearLayoutManager layoutManager;//TopScrollLinearLayoutManager是自定义的LinearLayoutManager，可以使点击的item置顶
 
     public AddressPicker(@NonNull Context context) {
         super(context, R.style.AddressPickerStyle);
@@ -111,7 +113,8 @@ public class AddressPicker extends Dialog implements View.OnClickListener {
         });
 
         //设置RecyclerView的LayoutManager
-        mAddressRecycler.setLayoutManager(new LinearLayoutManager(context));
+        layoutManager = new LinearLayoutManager(context);
+        mAddressRecycler.setLayoutManager(layoutManager);
 
         textViewArrayList.add(mAddressCityText);
         textViewArrayList.add(mAddressDistrictText);
@@ -166,18 +169,22 @@ public class AddressPicker extends Dialog implements View.OnClickListener {
             case TAB_INDEX_PROVINCE: //省份
                 indicatorTranslateAnimator(mAddressProvinceText);
                 mAddressRecycler.setAdapter(provinceAdapter);
+                provinceAdapter.scrollToSelectedPosition();//置顶
                 break;
             case TAB_INDEX_CITY: //城市
                 indicatorTranslateAnimator(mAddressCityText);
                 mAddressRecycler.setAdapter(cityAdapter);
+                cityAdapter.scrollToSelectedPosition();//置顶
                 break;
             case TAB_INDEX_DISTRICT: //区
                 indicatorTranslateAnimator(mAddressDistrictText);
                 mAddressRecycler.setAdapter(districtAdapter);
+                districtAdapter.scrollToSelectedPosition();//置顶
                 break;
             case TAB_INDEX_STREET: //街道
                 indicatorTranslateAnimator(mAddressStreetText);
                 mAddressRecycler.setAdapter(streetAdapter);
+                streetAdapter.scrollToSelectedPosition();//置顶
                 break;
         }
         tabIndex = index;
@@ -271,7 +278,9 @@ public class AddressPicker extends Dialog implements View.OnClickListener {
 
         mAddressProgressBar.setVisibility(View.GONE);
         if (list != null) {
-            provinceAdapter = new AddressPickerRecyclerAdapter(provinceList);
+            //先置空再初始化，节省内存
+            provinceAdapter = null;
+            provinceAdapter = new AddressPickerRecyclerAdapter(provinceList, layoutManager);
             mAddressRecycler.setAdapter(provinceAdapter);
             provinceAdapter.setTextColor(itemTextSelectedColor, itemTextUnselectedColor);
             provinceAdapter.setImageResourceId(itemImageResourceId);
@@ -307,7 +316,8 @@ public class AddressPicker extends Dialog implements View.OnClickListener {
 
 
         if (list != null) {
-            cityAdapter = new AddressPickerRecyclerAdapter(cityList);
+            cityAdapter = null;
+            cityAdapter = new AddressPickerRecyclerAdapter(cityList, layoutManager);
             mAddressRecycler.setAdapter(cityAdapter);
             cityAdapter.setTextColor(itemTextSelectedColor, itemTextUnselectedColor);
             cityAdapter.setImageResourceId(itemImageResourceId);
@@ -341,7 +351,8 @@ public class AddressPicker extends Dialog implements View.OnClickListener {
         });
 
         if (list != null) {
-            districtAdapter = new AddressPickerRecyclerAdapter(districtList);
+            districtAdapter = null;
+            districtAdapter = new AddressPickerRecyclerAdapter(districtList, layoutManager);
             mAddressRecycler.setAdapter(districtAdapter);
             districtAdapter.setTextColor(itemTextSelectedColor, itemTextUnselectedColor);
             districtAdapter.setImageResourceId(itemImageResourceId);
@@ -375,7 +386,8 @@ public class AddressPicker extends Dialog implements View.OnClickListener {
         });
 
         if (list != null) {
-            streetAdapter = new AddressPickerRecyclerAdapter(streetList);
+            streetAdapter = null;
+            streetAdapter = new AddressPickerRecyclerAdapter(streetList, layoutManager);
             mAddressRecycler.setAdapter(streetAdapter);
             streetAdapter.setTextColor(itemTextSelectedColor, itemTextUnselectedColor);
             streetAdapter.setImageResourceId(itemImageResourceId);
