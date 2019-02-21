@@ -10,5 +10,5 @@ public interface OnAddressPickerListener {
 
     void onStreetStart(int districtPosition);
 
-    void onEnsure(int streetPosition, String address);
+    void onEnsure(int streetPosition, String province, String city, String district, String street);
 }

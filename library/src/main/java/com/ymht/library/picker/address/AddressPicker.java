@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
 import com.ymht.library.R;
 
 import java.util.ArrayList;
@@ -65,6 +64,16 @@ public class AddressPicker extends Dialog implements View.OnClickListener {
     private int itemTextUnselectedColor = Color.parseColor("#343434");//item的text未选中的颜色
     private int itemImageResourceId = R.drawable.address_select;//item对号的资源图片
     private LinearLayoutManager layoutManager;//TopScrollLinearLayoutManager是自定义的LinearLayoutManager，可以使点击的item置顶
+
+    private boolean isOpenStreet = true;//是否开启街道的标记
+
+    public boolean isOpenStreet() {
+        return isOpenStreet;
+    }
+
+    public void setOpenStreet(boolean isOpenStreet) {
+        this.isOpenStreet = isOpenStreet;
+    }
 
     public AddressPicker(@NonNull Context context) {
         super(context, R.style.AddressPickerStyle);
@@ -259,10 +268,17 @@ public class AddressPicker extends Dialog implements View.OnClickListener {
                 textViewArrayList.get(2).setText("请选择");
                 textViewArrayList.get(2).setVisibility(View.GONE);
                 textViewArrayList.get(2).setTextColor(Color.BLACK);
-                mAddressProgressBar.setVisibility(View.VISIBLE);
+
+                if (isOpenStreet) {//如果开启了街道显示
+                    mAddressProgressBar.setVisibility(View.VISIBLE);
+                } else {//如果未开启街道显示
+                    mAddressProgressBar.setVisibility(View.GONE);
+                    listener.onEnsure(-1, mAddressProvinceText.getText().toString(), mAddressCityText.getText().toString(), mAddressDistrictText.getText().toString(), "");
+                    hide();
+                }
                 break;
             case TAB_INDEX_STREET: //街道
-                listener.onEnsure(position, mAddressProvinceText.getText().toString() + mAddressCityText.getText().toString() + mAddressDistrictText.getText().toString() + mAddressStreetText.getText().toString());
+                listener.onEnsure(position, mAddressProvinceText.getText().toString(), mAddressCityText.getText().toString(), mAddressDistrictText.getText().toString(), mAddressStreetText.getText().toString());
                 hide();
                 break;
         }
