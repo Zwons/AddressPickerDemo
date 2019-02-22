@@ -51,5 +51,5 @@ Android仿京东地址选择器，继承自Dialog。
  
  ```
  /*****新增设置是否开启街道选择（默认开启），在不开启的情况下，onEnsure(int streetPosition, String province, String city, String district, String street)中参数streetPosition为固定值-1、参数street为固定值空字符串*****/
- addressPicker.setOpenStreet(false);//不开启街道显示
+ addressPicker.setOpenStreet(false);//不开启街道选择
  ```
