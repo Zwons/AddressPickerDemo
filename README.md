@@ -29,7 +29,7 @@ Android仿京东地址选择器，继承自Dialog。
                     }
 
                     @Override
-                    public void onEnsure(int streetPosition, String address) {
+                    public void onEnsure(int streetPosition, String province, String city, String district, String street) {
                     }
                 });
                 addressPicker.show();
@@ -47,4 +47,9 @@ Android仿京东地址选择器，继承自Dialog。
  
  /**获取街道数据成功，参数为ArrayList<String>类型数据**/
  addressPicker.streetSuccess(list);
+ ```
+ 
+ ```
+ /*****新增设置是否开启街道选择（默认开启），在不开启的情况下，onEnsure(int streetPosition, String province, String city, String district, String street)中参数streetPosition为固定值-1、参数street为固定值空字符串*****/
+ addressPicker.setOpenStreet(false);//不开启街道显示
  ```
